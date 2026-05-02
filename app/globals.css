@@ -1,18 +1,84 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
+/* ─── Semantic color tokens → Tailwind utilities ─────────────────────────── */
+@theme inline {
+  --color-page:    var(--page);
+  --color-panel:   var(--panel);
+  --color-raised:  var(--raised);
+  --color-brand:   var(--brand);
+  --color-heading: var(--heading);
+  --color-body:    var(--body);
+  --color-dim:     var(--dim);
+  --color-edge:    var(--edge);
+  --color-glow:    var(--glow);
 }
 
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+/* ─── Light mode (shared across all themes) ──────────────────────────────── */
+html:not(.dark) {
+  --page:    #f4f4f6;
+  --panel:   #ffffff;
+  --raised:  #ececef;
+  --heading: #09090b;
+  --body:    #52525b;
+  --dim:     #a1a1aa;
+  --edge:    #e4e4e7;
+  --glow:    transparent;
 }
 
-* {
-  box-sizing: border-box;
+/* ─── CARBON — cold, precise, industrial ─────────────────────────────────── */
+html:not(.dark) [data-theme="carbon"],
+html:not(.dark) { --brand: #3b82f6; }
+
+html.dark[data-theme="carbon"],
+html.dark {
+  --page:    #09090b;
+  --panel:   #141417;
+  --raised:  #1e1e23;
+  --brand:   #3b82f6;
+  --heading: #f4f4f6;
+  --body:    #a1a1aa;
+  --dim:     #52525b;
+  --edge:    #27272a;
+  --glow:    transparent;
 }
+
+/* ─── EMBER — hot, aggressive, energetic ─────────────────────────────────── */
+html:not(.dark)[data-theme="ember"] { --brand: #f97316; }
+
+html.dark[data-theme="ember"] {
+  --page:    #0e0a07;
+  --panel:   #1a120a;
+  --raised:  #261b10;
+  --brand:   #f97316;
+  --heading: #faf5f0;
+  --body:    #a8998c;
+  --dim:     #6b5c50;
+  --edge:    #3d2e20;
+  --glow:    transparent;
+}
+
+/* ─── AURORA — premium, futuristic, glowing ──────────────────────────────── */
+html:not(.dark)[data-theme="aurora"] { --brand: #818cf8; }
+
+html.dark[data-theme="aurora"] {
+  --page:    #07071a;
+  --panel:   #0d0d28;
+  --raised:  #131340;
+  --brand:   #818cf8;
+  --heading: #e8e8ff;
+  --body:    #9090c0;
+  --dim:     #4d4d80;
+  --edge:    #1e1e55;
+  --glow:    rgba(129, 140, 248, 0.08);
+}
+
+/* Aurora card glow effect */
+html.dark[data-theme="aurora"] .panel-glow {
+  box-shadow: 0 0 24px var(--glow), inset 0 0 0 1px var(--edge);
+}
+
+/* ─── Base styles ─────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
 
 html, body {
   max-width: 100vw;
@@ -21,10 +87,11 @@ html, body {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--page);
+  color: var(--heading);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 input[type='number']::-webkit-outer-spin-button,
@@ -32,6 +99,4 @@ input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type='number'] {
-  -moz-appearance: textfield;
-}
+input[type='number'] { -moz-appearance: textfield; }
